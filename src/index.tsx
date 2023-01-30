@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import Discover from "./components/Discover/Index";
+import Discover from "./components/Index";
 import "./index.scss";
 import CoreLayout from "./layouts/Index";
 import reportWebVitals from "./reportWebVitals";

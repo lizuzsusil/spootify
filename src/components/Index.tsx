@@ -1,7 +1,7 @@
-import DiscoverBlock from "./DiscoverBlock";
-import { CategoryTypeList } from "../../queryHook/categories";
-import { NewReleasesTypeList } from "../../queryHook/new-releases";
-import { FeaturedPlaylistsTypeList } from "../../queryHook/featured-playlists";
+import DiscoverBlock from "./Discover/DiscoverBlock";
+import { CategoryTypeList } from "../queryHook/categories";
+import { NewReleasesTypeList } from "../queryHook/new-releases";
+import { FeaturedPlaylistsTypeList } from "../queryHook/featured-playlists";
 
 const Index = () => {
   const { data: getCategoryTypeList, isLoading: categoryLoader }: any =
