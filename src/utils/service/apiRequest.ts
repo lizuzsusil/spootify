@@ -3,9 +3,12 @@ import config from '../../config/config';
 
 const { api }:any = config;
 
-export const apiRequestService = {
-  apiRequest: async (REQUEST_URL: any) => {
-    const {data: {access_token: token}}: any = await axios.post(
+async function getAccessToken() { 
+  if (localStorage.getItem("access_token")) {
+    return localStorage.getItem("access_token")
+  } 
+  try{
+    const {data: {access_token: accessToken}} = await axios.post(
       api.authUrl,
       new URLSearchParams({ 'grant_type': 'client_credentials' }),
       {
@@ -14,8 +17,18 @@ export const apiRequestService = {
           Authorization: 'Basic ' + btoa(api.clientId + ':' + api.clientSecret),
         },
       }
-      )
-      .catch((err) => console.log());
+      );
+    localStorage.setItem("access_token", accessToken)
+    return(accessToken);
+    } catch (error:any){
+      console.log("error =>", error.message)
+    }
+}
+
+
+export const apiRequestService = {
+  apiRequest: async (REQUEST_URL: any) => {
+    let token = await getAccessToken();
 
     const response: any = await axios
       .get(`${REQUEST_URL}`, {headers: { Authorization: `Bearer ${token}` }})

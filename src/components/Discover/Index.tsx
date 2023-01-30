@@ -4,9 +4,11 @@ import { NewReleasesTypeList } from "../../queryHook/new-releases";
 import { FeaturedPlaylistsTypeList } from "../../queryHook/featured-playlists";
 
 const Index = () => {
-  const { data: getCategoryTypeList }: any = CategoryTypeList();
-  const { data: getNewReleasesTypeList }: any = NewReleasesTypeList();
-  const { data: getFeaturedPlaylistsTypeList }: any =
+  const { data: getCategoryTypeList, isLoading: categoryLoader }: any =
+    CategoryTypeList();
+  const { data: getNewReleasesTypeList, isLoading: newReleaseLoader }: any =
+    NewReleasesTypeList();
+  const { data: getFeaturedPlaylistsTypeList, isLoading: playlistLoader }: any =
     FeaturedPlaylistsTypeList();
 
   return (
@@ -14,16 +16,19 @@ const Index = () => {
       <DiscoverBlock
         text="RELEASED THIS WEEK"
         id="released"
+        isLoading={newReleaseLoader}
         data={getNewReleasesTypeList?.albums?.items}
       />
       <DiscoverBlock
         text="FEATURED PLAYLISTS"
         id="featured"
+        isLoading={playlistLoader}
         data={getFeaturedPlaylistsTypeList?.playlists?.items}
       />
       <DiscoverBlock
         text="BROWSE"
         id="browse"
+        isLoading={categoryLoader}
         data={getCategoryTypeList?.categories?.items}
         imagesKey="icons"
       />

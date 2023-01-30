@@ -11,6 +11,7 @@ interface DiscoverBlockType {
   id: string;
   data: any;
   imagesKey?: any;
+  isLoading?: boolean;
 }
 
 function scrollContainer(
@@ -31,6 +32,7 @@ export default function DiscoverBlock({
   text,
   id,
   data,
+  isLoading,
   imagesKey = "images",
 }: DiscoverBlockType) {
   return (
@@ -52,9 +54,16 @@ export default function DiscoverBlock({
         ) : null}
       </div>
       <div className="discover-block__row" id={id}>
-        {data?.map(({ [imagesKey as number]: images, name }: any) => (
-          <DiscoverItem key={name} images={images} name={name} />
-        ))}
+        {!isLoading ? (
+          data?.map(({ [imagesKey as number]: images, name }: any) => (
+            <DiscoverItem key={name} images={images} name={name} />
+          ))
+        ) : (
+          <div className="lds-ripple">
+            <div></div>
+            <div></div>
+          </div>
+        )}
       </div>
     </div>
   );
