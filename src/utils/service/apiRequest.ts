@@ -3,11 +3,8 @@ import config from '../../config/config';
 
 const { api }:any = config;
 
-async function getAccessToken() { 
-  if (localStorage.getItem("access_token")) {
-    return localStorage.getItem("access_token")
-  } 
-  try{
+export const apiRequestService = {
+  apiRequest: async (REQUEST_URL: any) => {
     const {data: {access_token: accessToken}} = await axios.post(
       api.authUrl,
       new URLSearchParams({ 'grant_type': 'client_credentials' }),
@@ -18,20 +15,9 @@ async function getAccessToken() {
         },
       }
       );
-    localStorage.setItem("access_token", accessToken)
-    return(accessToken);
-    } catch (error:any){
-      console.log("error =>", error.message)
-    }
-}
-
-
-export const apiRequestService = {
-  apiRequest: async (REQUEST_URL: any) => {
-    let token = await getAccessToken();
 
     const response: any = await axios
-      .get(`${REQUEST_URL}`, {headers: { Authorization: `Bearer ${token}` }})
+      .get(`${REQUEST_URL}`, {headers: { Authorization: `Bearer ${accessToken}` }})
       .catch((err) => console.log(err.message));
     return response?.data;
   },
